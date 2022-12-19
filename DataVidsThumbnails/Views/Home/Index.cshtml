@@ -1,0 +1,59 @@
+﻿@model VideoUpload
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+
+    <br />
+    <br />
+
+    @using (Html.BeginForm("SavePicture", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div>
+                @Html.LabelFor(m=>m.Title, new {@class="form-label"})
+            </div>
+            <div>
+                @Html.EditorFor(m=>m.Title, new {@class="form-control"})
+            </div>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <div>
+                @Html.LabelFor(m=>m.File, new {@class="form-label"})
+            </div>
+            <div>
+                @Html.EditorFor(m=>m.File, new {@class="form-control"})
+            </div>
+        </div>
+
+        <br />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <br />
+
+        @if (Model != null && Model.Results != null)
+        {
+            if (Model.Results.Success)
+            {
+                <div class="alert alert-success">
+                    <strong>Thumbnail created successfully! Check your temp folder.</strong>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    <strong>@Model.Results.WarningText</strong>
+                </div>
+            }
+        }
+    }
+
+</div>
